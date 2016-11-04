@@ -29,17 +29,18 @@
       ;; explicitly run prog-mode hooks since erlang mode does is not
       ;; derived from prog-mode major-mode
       (add-hook 'erlang-mode-hook 'spacemacs/run-prog-mode-hooks)
-      ;; (setq erlang-root-dir "/usr/lib/erlang/erts-5.10.3")
-      ;; (add-to-list 'exec-path "/usr/lib/erlang/erts-5.10.3/bin")
-      ;; (setq erlang-man-root-dir "/usr/lib/erlang/erts-5.10.3/man")
-      ;; (add-hook 'erlang-mode-hook
-      ;;           (lambda ()
-      ;;             (setq mode-name "Erlang")
-      ;;             ;; when starting an Erlang shell in Emacs, with a custom node name
-      ;;             (setq inferior-erlang-machine-options '("-sname" "syl20bnr"))
-      ;;             ))
-      (setq erlang-compile-extra-opts '(debug_info)))
+      (setq erlang-root-dir "/usr/local/Cellar/erlang-r19/19.0.2/lib/erlang/erts-8.0.2")
+      (add-to-list 'exec-path "/usr/local/Cellar/erlang-r19/19.0.2/lib/erlang/erts-8.0.2/bin")
+      (setq erlang-man-root-dir "/usr/local/Cellar/erlang-r19/19.0.2/lib/erlang/erts-8.0.2/bin")
+      (add-hook 'erlang-mode-hook
+                (lambda ()
+                  (setq mode-name "Erlang")
+                  ;; when starting an Erlang shell in Emacs, with a custom node name
+                  (setq inferior-erlang-machine-options '("-sname" "heller"))
+                  ))
+      (setq erlang-compile-extra-opts '(debug_info (i . ../../../inlcude) (i . ../../include) (i . ../include) (i . include))))
     :config
+    ;; (erlang-compile)
     (require 'erlang-start)))
 
 (defun erlang/post-init-flycheck ()
@@ -50,3 +51,19 @@
 
 (defun erlang/post-init-helm-gtags ()
   (spacemacs/helm-gtags-define-keys-for-mode 'erlang-mode))
+
+(setq flycheck-erlang-include-path (list
+                                    "inc"
+                                    "../inc"
+                                    "../../inc"
+                                    "../../../inc"
+                                    "include"
+                                    "../include"
+                                    "../../include"
+                                    "../../../include"
+                                    ))
+(setq flycheck-erlang-library-path (list
+                                    "../ebin"
+                                    "../../ebin"
+                                    "../../../ebin"
+                                    ))
